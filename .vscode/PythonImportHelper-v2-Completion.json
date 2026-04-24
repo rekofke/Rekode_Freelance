@@ -1,0 +1,197 @@
+[
+    {
+        "label": "Blueprint",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "create_access_token",
+        "importPath": "flask_jwt_extended",
+        "description": "flask_jwt_extended",
+        "isExtraImport": true,
+        "detail": "flask_jwt_extended",
+        "documentation": {}
+    },
+    {
+        "label": "jwt_required",
+        "importPath": "flask_jwt_extended",
+        "description": "flask_jwt_extended",
+        "isExtraImport": true,
+        "detail": "flask_jwt_extended",
+        "documentation": {}
+    },
+    {
+        "label": "get_jwt_identity",
+        "importPath": "flask_jwt_extended",
+        "description": "flask_jwt_extended",
+        "isExtraImport": true,
+        "detail": "flask_jwt_extended",
+        "documentation": {}
+    },
+    {
+        "label": "generate_password_hash",
+        "importPath": "werkzeug.security",
+        "description": "werkzeug.security",
+        "isExtraImport": true,
+        "detail": "werkzeug.security",
+        "documentation": {}
+    },
+    {
+        "label": "check_password_hash",
+        "importPath": "werkzeug.security",
+        "description": "werkzeug.security",
+        "isExtraImport": true,
+        "detail": "werkzeug.security",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "SQLAlchemy",
+        "importPath": "flask_sqlalchemy",
+        "description": "flask_sqlalchemy",
+        "isExtraImport": true,
+        "detail": "flask_sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "create_app",
+        "importPath": "app",
+        "description": "app",
+        "isExtraImport": true,
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "register",
+        "kind": 2,
+        "importPath": "backend.app.auth",
+        "description": "backend.app.auth",
+        "peekOfCode": "def register():\n    data = request.json\n    if User.query.filter_by(email=data['email']).first():\n        return jsonify({'error': 'Email already exists'}), 400\n    hashed = generate_password_hash(data['password'])\n    user = User(emai=data['email'], password=hashed, name=data['name'])\n    db.session.add(user)\n    db.session.commit()\n    return jsonify({'message': 'User creagted'}), 201\n@auth_bp.route('/login', methods=['POST'])",
+        "detail": "backend.app.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "kind": 2,
+        "importPath": "backend.app.auth",
+        "description": "backend.app.auth",
+        "peekOfCode": "def login():\n    data = request.json\n    user = User.query.filter_by(email=data['email']).first()\n    if not user or not check_password_hash(user.password, data['password']):\n        return jsonify({'error': 'Invalid credentials'}), 401\n    access_token = create_access_token(identity=user.id)\n    return jsonify({'access_token': access_token, 'user': {'id': {'id': user.id, 'name': user.name, 'email': user.email}}})",
+        "detail": "backend.app.auth",
+        "documentation": {}
+    },
+    {
+        "label": "auth_bp",
+        "kind": 5,
+        "importPath": "backend.app.auth",
+        "description": "backend.app.auth",
+        "peekOfCode": "auth_bp = Blueprint('auth', __name__)\n@auth_bp.route('.register', methods=['POST'])\ndef register():\n    data = request.json\n    if User.query.filter_by(email=data['email']).first():\n        return jsonify({'error': 'Email already exists'}), 400\n    hashed = generate_password_hash(data['password'])\n    user = User(emai=data['email'], password=hashed, name=data['name'])\n    db.session.add(user)\n    db.session.commit()",
+        "detail": "backend.app.auth",
+        "documentation": {}
+    },
+    {
+        "label": "Config",
+        "kind": 6,
+        "importPath": "backend.app.config",
+        "description": "backend.app.config",
+        "peekOfCode": "class Config:\n    SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'dev-secret')\n    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///Rekode_Freelance.db')\n    SQLALCHEMY_TRACK_MODIFICATIOND = False\n    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'dev-jwt secret')",
+        "detail": "backend.app.config",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "backend.app.models",
+        "description": "backend.app.models",
+        "peekOfCode": "class User(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    email = db.Column(db.String(120), unique=True, nullable=False)\n    password = db.Column(db.String(200), unique=True, nullable=False) # store hashed\n    name = db.Column(db.String(100), unique=True, nullable=False)\n    clients = db.relationship('Client', backref='user', lazy=True)\nclass Client(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    name = db.Column(db.String(100), nullable=False)\n    email = db.Column(db.String(120))",
+        "detail": "backend.app.models",
+        "documentation": {}
+    },
+    {
+        "label": "Client",
+        "kind": 6,
+        "importPath": "backend.app.models",
+        "description": "backend.app.models",
+        "peekOfCode": "class Client(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    name = db.Column(db.String(100), nullable=False)\n    email = db.Column(db.String(120))\n    phone = db.Column(db.String(20))\n    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))\n    projects = db.relationship('Project', backref='client', lazy=True)\nclass Project(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    name = db.Column(db.String(100), nullable=False)",
+        "detail": "backend.app.models",
+        "documentation": {}
+    },
+    {
+        "label": "Project",
+        "kind": 6,
+        "importPath": "backend.app.models",
+        "description": "backend.app.models",
+        "peekOfCode": "class Project(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    name = db.Column(db.String(100), nullable=False)\n    hourly_rate = db.Column(db.Float, nullable=False)\n    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))\n    time_entries = db.relationship('TimeEntry', backref='project',lazy=True)\nclass TimeEntry(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    description = db.Column(db.String(200))\n    hours = db.Column(db.Float, nullable=False)",
+        "detail": "backend.app.models",
+        "documentation": {}
+    },
+    {
+        "label": "TimeEntry",
+        "kind": 6,
+        "importPath": "backend.app.models",
+        "description": "backend.app.models",
+        "peekOfCode": "class TimeEntry(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    description = db.Column(db.String(200))\n    hours = db.Column(db.Float, nullable=False)\n    date  = db.Column(db.Date, default=datetime.utcnow)\n    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))\n    invoiced = db.Column(db.Boolean, default=False)\n    invoice_id = db.Column(db.Integer, db.ForeignKey('invoice.id'), nullable=True)\nclass Invoice(db.Model):\n    id = db.Column(db.Integer, primary_key=True)",
+        "detail": "backend.app.models",
+        "documentation": {}
+    },
+    {
+        "label": "Invoice",
+        "kind": 6,
+        "importPath": "backend.app.models",
+        "description": "backend.app.models",
+        "peekOfCode": "class Invoice(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    invoice_number = db.Column (db.String(50), nullable=False)\n    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))\n    issue_date = db.Column(db.Date, default=datetime.utcnow)\n    due_date = db.Column(db.Date)\n    total_amount = db.Column(db.Float, nullable=False)\n    paid = db.Column(db.Boolean, default=False)\n    time_entries = db.relationship('TimeEntry', backref='invoice', lazy=True)",
+        "detail": "backend.app.models",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "backend.app.models",
+        "description": "backend.app.models",
+        "peekOfCode": "db = SQLAlchemy()\nclass User(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    email = db.Column(db.String(120), unique=True, nullable=False)\n    password = db.Column(db.String(200), unique=True, nullable=False) # store hashed\n    name = db.Column(db.String(100), unique=True, nullable=False)\n    clients = db.relationship('Client', backref='user', lazy=True)\nclass Client(db.Model):\n    id = db.Column(db.Integer, primary_key=True)\n    name = db.Column(db.String(100), nullable=False)",
+        "detail": "backend.app.models",
+        "documentation": {}
+    }
+]
