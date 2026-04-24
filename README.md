@@ -1,9 +1,6 @@
 # 🧑‍💻 Rekode_Freelance – Freelance Web Development Portfolio
 
 [![GitHub license](https://img.shields.io/github/license/your-username/Rekode_Freelance)](LICENSE)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/your-badge/deploy-status)](https://app.netlify.com/sites/your-site)
-
-**Live site:** [rekode-freelance.netlify.app](https://rekode-freelance.netlify.app) *(replace with your actual URL)*
 
 A clean, modern portfolio site and client hub for freelance backend and full‑stack development services.  
 Built to attract potential clients, showcase past work, and provide a direct point of contact.
@@ -53,8 +50,6 @@ Built to attract potential clients, showcase past work, and provide a direct poi
 - Class bookings, trainer dashboards, JWT user roles
 - Real‑time availability checks
 
-*(Add your own project links and descriptions here)*
-
 ---
 
 ## 📩 How to Hire Me
@@ -65,8 +60,6 @@ I’m available for freelance contracts – small to medium projects, backend su
 - 📧 rekofke.eric@gmail.com
 - 💼 [LinkedIn](https://linkedin.com/in/your-profile)
 - 🐙 GitHub (you’re here)
-
-Or use the contact form on my [portfolio site](https://rekode-freelance.netlify.app/contact).
 
 ---
 
